@@ -12,12 +12,40 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "godot",
+          "title": "Godot Node Tree",
+          "icon": "icons/godot.svg"
+        }
+      ]
+    },
+    "views": {
+      "godot": [
+        {
+          "id": "nodeTree",
+          "name": "Godot Node Tree",
+          "icon": "$(symbol-class)"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "godot-node-tree-vscode.helloWorld",
-        "title": "Hello World"
+        "command": "godot-node-tree-vscode.refreshNodeTree",
+        "title": "Refresh",
+        "icon": "$(refresh)"
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "godot-node-tree-vscode.refreshNodeTree",
+          "group": "navigation",
+          "when": "view == nodeTree"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
