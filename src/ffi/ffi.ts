@@ -18,7 +18,7 @@ export function dispose() {
 export function generateNodeTree({
   projectPath,
 }: ScanBranchesInput): Result<NodeTree> {
-  const result = gbc.generateNodeTre([projectPath]);
+  const result = gbc.generateNodeTree([projectPath]);
   return parseResult(result);
 }
 
@@ -27,7 +27,7 @@ export type ScanBranchesInput = {
 };
 
 const gbc = define({
-  generateNodeTre: {
+  generateNodeTree: {
     library: "godotNodeTreeCore",
     paramsType: [DataType.String],
     retType: DataType.String,

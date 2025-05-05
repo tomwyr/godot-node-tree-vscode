@@ -3,18 +3,18 @@ import * as vscode from "vscode";
 
 export function getLibraryPath(context: vscode.ExtensionContext): string {
   const root = context.extensionPath;
-  const fileName = getFileName();
+  const fileName = "libGodotNodeTreeCore" + getLibExtension();
   return path.join(root, "out", fileName);
 }
 
-function getFileName(): string {
+function getLibExtension(): string {
   switch (process.platform) {
     case "win32":
-      return "gbc-windows.dll";
+      return ".dll";
     case "linux":
-      return "gbc-linux.so";
+      return ".so";
     case "darwin":
-      return "gbc-macos.dylib";
+      return ".dylib";
     default:
       throw unsupportedOsError;
   }
