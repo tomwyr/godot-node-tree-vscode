@@ -4,7 +4,10 @@ import { NodeTreeView } from "./views/nodeTree";
 
 export function activate(context: ExtensionContext) {
   ffi.initialize(context);
+
   const nodeTreeView = new NodeTreeView();
+  nodeTreeView.refresh();
+
   window.registerTreeDataProvider("nodeTree", nodeTreeView);
   const subscription = commands.registerCommand(
     "godot-node-tree-vscode.refreshNodeTree",
