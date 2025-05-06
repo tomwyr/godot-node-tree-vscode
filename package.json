@@ -12,6 +12,16 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Godot Node Tree",
+      "properties": {
+        "godotNodeTree.projectPath": {
+          "type": "string",
+          "title": "Project path",
+          "description": "Relative path to the directory containing the Godot project."
+        }
+      }
+    },
     "viewsContainers": {
       "activitybar": [
         {

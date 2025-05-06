@@ -1,5 +1,5 @@
 export type GodotNodeTreeConfig = {
-  projectPath?: string;
+  projectPath: string;
 };
 
 export type NodeTree = {
