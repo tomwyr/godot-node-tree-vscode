@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, window } from "vscode";
+import { commands, ExtensionContext, window, workspace } from "vscode";
 import * as ffi from "./ffi/ffi";
 import { NodeTreeView } from "./views/nodeTree";
 
@@ -8,12 +8,27 @@ export function activate(context: ExtensionContext) {
   const nodeTreeView = new NodeTreeView();
   nodeTreeView.refresh();
 
-  window.registerTreeDataProvider("nodeTree", nodeTreeView);
-  const subscription = commands.registerCommand(
+  const treeViewDisposer = window.registerTreeDataProvider(
+    "nodeTree",
+    nodeTreeView
+  );
+
+  const refreshCommandSubscription = commands.registerCommand(
     "godot-node-tree-vscode.refreshNodeTree",
     () => nodeTreeView.refresh()
   );
-  context.subscriptions.push(subscription);
+
+  const configListenerDisposer = workspace.onDidChangeConfiguration((event) => {
+    if (event.affectsConfiguration("godotNodeTree")) {
+      nodeTreeView.refresh();
+    }
+  });
+
+  context.subscriptions.push(
+    treeViewDisposer,
+    refreshCommandSubscription,
+    configListenerDisposer
+  );
 }
 
 export function deactivate() {}

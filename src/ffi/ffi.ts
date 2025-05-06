@@ -17,16 +17,16 @@ export function dispose() {
 
 export function generateNodeTree({
   projectPath,
-}: ScanBranchesInput): Result<NodeTree> {
-  const result = gbc.generateNodeTree([projectPath]);
+}: GenerateNodeTreeInput): Result<NodeTree> {
+  const result = lib.generateNodeTree([projectPath]);
   return parseResult(result);
 }
 
-export type ScanBranchesInput = {
+export type GenerateNodeTreeInput = {
   projectPath: string;
 };
 
-const gbc = define({
+const lib = define({
   generateNodeTree: {
     library: "godotNodeTreeCore",
     paramsType: [DataType.String],

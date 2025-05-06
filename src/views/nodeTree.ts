@@ -1,3 +1,4 @@
+import path from "path";
 import {
   EventEmitter,
   TreeDataProvider,
@@ -5,6 +6,7 @@ import {
   TreeItemCollapsibleState,
   window,
 } from "vscode";
+import { loadConfiguration } from "../common/configuration";
 import { Node, NodeTree } from "../common/models";
 import { getWorkspaceRoot } from "../common/workspace";
 import { generateNodeTree } from "../ffi/ffi";
@@ -34,20 +36,14 @@ export class NodeTreeView implements TreeDataProvider<Node> {
 
   refresh() {
     window.withProgress({ location: { viewId: "nodeTree" } }, async () => {
-      const nodeTree = getNodeTree();
-      if (nodeTree) {
-        this.nodeTree = nodeTree;
-        this.changeEvent.fire();
-      }
+      this.nodeTree = getNodeTree();
+      this.changeEvent.fire();
     });
   }
 }
 
 function getNodeTree(): NodeTree | undefined {
-  // TODO Provide project path to the generator.
-  const result = generateNodeTree({
-    projectPath: getWorkspaceRoot(),
-  });
+  const result = generateNodeTree({ projectPath: getProjectPath() });
   switch (result.type) {
     case "ok":
       return result.value;
@@ -56,6 +52,12 @@ function getNodeTree(): NodeTree | undefined {
       window.showErrorMessage("An error occured while generating node tree");
       return;
   }
+}
+
+function getProjectPath() {
+  const workspacePath = getWorkspaceRoot();
+  const relativePath = loadConfiguration().projectPath.trim();
+  return path.join(workspacePath, relativePath);
 }
 
 function hasChildren(node: Node): boolean {
