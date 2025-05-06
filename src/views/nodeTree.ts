@@ -6,6 +6,7 @@ import {
   window,
 } from "vscode";
 import { Node, NodeTree } from "../common/models";
+import { getWorkspaceRoot } from "../common/workspace";
 import { generateNodeTree } from "../ffi/ffi";
 
 export class NodeTreeView implements TreeDataProvider<Node> {
@@ -45,7 +46,7 @@ export class NodeTreeView implements TreeDataProvider<Node> {
 function getNodeTree(): NodeTree | undefined {
   // TODO Provide project path to the generator.
   const result = generateNodeTree({
-    projectPath: "",
+    projectPath: getWorkspaceRoot(),
   });
   switch (result.type) {
     case "ok":
