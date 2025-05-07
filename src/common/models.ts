@@ -2,6 +2,13 @@ export type GodotNodeTreeConfig = {
   projectPath: string;
 };
 
+export type NodeParams = {
+  name: string;
+  type?: string;
+  instance?: string;
+  parent?: string;
+};
+
 export type NodeTree = {
   scenes: [Scene];
 };

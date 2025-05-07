@@ -7,6 +7,7 @@ import {
   window,
 } from "vscode";
 import { loadConfiguration } from "../common/configuration";
+import { getErrorDescription } from "../common/errors";
 import { Node, NodeTree } from "../common/models";
 import { getWorkspaceRoot } from "../common/workspace";
 import { generateNodeTree } from "../ffi/ffi";
@@ -48,8 +49,7 @@ function getNodeTree(): NodeTree | undefined {
     case "ok":
       return result.value;
     case "err":
-      // TODO Display detailed error moessage.
-      window.showErrorMessage("An error occured while generating node tree");
+      window.showErrorMessage(getErrorDescription(result.value));
       return;
   }
 }

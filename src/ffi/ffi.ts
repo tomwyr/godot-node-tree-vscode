@@ -1,5 +1,6 @@
 import { close, DataType, define, open } from "ffi-rs";
 import * as vscode from "vscode";
+import { GodotNodeTreeError } from "../common/errors";
 import { getLibraryPath } from "../common/library";
 import { NodeTree } from "../common/models";
 import { parseResult, Result } from "./result";
@@ -17,7 +18,7 @@ export function dispose() {
 
 export function generateNodeTree({
   projectPath,
-}: GenerateNodeTreeInput): Result<NodeTree> {
+}: GenerateNodeTreeInput): Result<NodeTree, GodotNodeTreeError> {
   const result = lib.generateNodeTree([projectPath]);
   return parseResult(result);
 }

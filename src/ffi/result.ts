@@ -1,18 +1,18 @@
-export type Result<T> =
-  | { type: "ok"; value: T }
-  | { type: "err"; value: object };
+export type Result<T, E> = { type: "ok"; value: T } | { type: "err"; value: E };
 
-export function parseResult<T extends {}>(resultString: string): Result<T>;
+export function parseResult<T extends {}, E extends {}>(
+  resultString: string
+): Result<T, E>;
 
-export function parseResult(
+export function parseResult<E extends {}>(
   resultString: string,
   options: { discardData: true }
-): Result<void>;
+): Result<void, E>;
 
-export function parseResult<T extends {}>(
+export function parseResult<T extends {}, E extends {}>(
   resultString: string,
   options: ParseResultOptions = { discardData: false }
-): Result<T> | Result<void> {
+): Result<T, E> | Result<void, E> {
   let resultData = JSON.parse(resultString);
   if ("ok" in resultData) {
     return {
