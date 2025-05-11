@@ -18,19 +18,21 @@ export function dispose() {
 
 export function generateNodeTree({
   projectPath,
+  validateProjectPath,
 }: GenerateNodeTreeInput): Result<NodeTree, GodotNodeTreeError> {
-  const result = lib.generateNodeTree([projectPath]);
+  const result = lib.generateNodeTree([projectPath, validateProjectPath]);
   return parseResult(result);
 }
 
 export type GenerateNodeTreeInput = {
   projectPath: string;
+  validateProjectPath: boolean;
 };
 
 const lib = define({
   generateNodeTree: {
     library: "godotNodeTreeCore",
-    paramsType: [DataType.String],
+    paramsType: [DataType.String, DataType.Boolean],
     retType: DataType.String,
     freeResultMemory: true,
   },

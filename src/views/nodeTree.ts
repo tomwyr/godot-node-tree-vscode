@@ -47,7 +47,10 @@ export class NodeTreeView implements TreeDataProvider<Node> {
 }
 
 function getNodeTree(): NodeTree | undefined {
-  const result = generateNodeTree({ projectPath: getProjectPath() });
+  const result = generateNodeTree({
+    projectPath: getProjectPath(),
+    validateProjectPath: true,
+  });
   switch (result.type) {
     case "ok":
       return result.value;
