@@ -1,15 +1,15 @@
 import { NodeParams } from "./models";
 
 export type GodotNodeTreeError =
-  | { type: "invalidGodotProject"; projectPath: string }
-  | { type: "scanningScenesFailed"; projectPath: string }
-  | { type: "readingSceneFailed"; scenePath: string }
-  | { type: "unexpectedNodeParameters"; nodeParams: NodeParams }
-  | { type: "unexpectedSceneResource"; instance: string }
-  | { type: "parentNodeNotFound"; sceneName: string };
+  | { errorType: "invalidGodotProject"; projectPath: string }
+  | { errorType: "scanningScenesFailed"; projectPath: string }
+  | { errorType: "readingSceneFailed"; scenePath: string }
+  | { errorType: "unexpectedNodeParameters"; nodeParams: NodeParams }
+  | { errorType: "unexpectedSceneResource"; instance: string }
+  | { errorType: "parentNodeNotFound"; sceneName: string };
 
 export function getErrorDescription(error: GodotNodeTreeError): string {
-  switch (error.type) {
+  switch (error.errorType) {
     case "invalidGodotProject":
       return `Godot project could not be found at path \`${error.projectPath}\`.`;
     case "scanningScenesFailed":

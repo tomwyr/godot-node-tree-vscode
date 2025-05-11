@@ -40,6 +40,13 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "nodeTree",
+        "contents": "An error occurred while generating node tree.\nCheck that the extension is properly configured and that all scenes are valid.\n[Refresh](command:godot-node-tree-vscode.refreshNodeTree)",
+        "when": "godot-node-tree-vscode.dataState == 'error'"
+      }
+    ],
     "commands": [
       {
         "command": "godot-node-tree-vscode.refreshNodeTree",

@@ -1,5 +1,6 @@
 import path from "path";
 import {
+  commands,
   EventEmitter,
   TreeDataProvider,
   TreeItem,
@@ -37,8 +38,10 @@ export class NodeTreeView implements TreeDataProvider<Node> {
 
   refresh() {
     window.withProgress({ location: { viewId: "nodeTree" } }, async () => {
+      setDataState("loading");
       this.nodeTree = getNodeTree();
       this.changeEvent.fire();
+      setDataState(this.nodeTree ? "data" : "error");
     });
   }
 }
@@ -89,4 +92,12 @@ function labelOf(node: Node): string {
       node satisfies never;
       return "";
   }
+}
+
+function setDataState(value: "loading" | "data" | "error") {
+  commands.executeCommand(
+    "setContext",
+    "godot-node-tree-vscode.dataState",
+    value
+  );
 }
