@@ -8,7 +8,7 @@ import {
   window,
 } from "vscode";
 import { loadConfiguration } from "../common/configuration";
-import { getErrorDescription } from "../common/errors";
+import { getErrorDescription, GodotNodeTreeError } from "../common/errors";
 import { Node, NodeTree } from "../common/models";
 import { getWorkspaceRoot } from "../common/workspace";
 import { generateNodeTree } from "../ffi/ffi";
@@ -55,8 +55,39 @@ function getNodeTree(): NodeTree | undefined {
     case "ok":
       return result.value;
     case "err":
-      window.showErrorMessage(getErrorDescription(result.value));
+      handleNodeTreeError(result.value);
       return;
+  }
+}
+
+async function handleNodeTreeError(error: GodotNodeTreeError) {
+  const message = getErrorDescription(error);
+
+  switch (error.errorType) {
+    case "invalidGodotProject":
+      showError(message, {
+        "Configure path": () =>
+          commands.executeCommand(
+            "workbench.action.openSettings",
+            "godotNodeTree.projectPath"
+          ),
+      });
+      break;
+
+    default:
+      showError(message);
+      break;
+  }
+}
+
+async function showError<T extends string>(
+  message: T,
+  actions: { [key: string]: () => void } = {}
+) {
+  const items = Object.keys(actions);
+  const selectedItem = await window.showErrorMessage(message, ...items);
+  if (selectedItem) {
+    actions[selectedItem]();
   }
 }
 
