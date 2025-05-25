@@ -6,9 +6,13 @@ A VSCode extension providing utilities and information about the node tree for m
 
 Extension features can be accessed via the Godot Node Tree view in the editor's sidebar.
 
+<img width="137" alt="view" src="https://github.com/user-attachments/assets/99f6f26b-41bf-46f2-8149-61823b7fc97b" />
+
 ### Outline
 
 Displays the node tree structure of the Godot project.
+
+<img width="390" alt="outline" src="https://github.com/user-attachments/assets/8020d781-025c-40fc-9e69-95b1877f3005" />
 
 ## Configuration
 
