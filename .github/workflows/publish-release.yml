@@ -1,0 +1,88 @@
+name: Publish new release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    env:
+      VSCE_AUTH_TOKEN: ${{ secrets.VSCE_AUTH_TOKEN }}
+      CORE_LIB_REPO: tomwyr/godot-node-tree-core
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup node
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies and tools
+        run: |
+          npm install && npm install -g @vscode/vsce
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Resolve dependencies version
+        id: resolve-versions
+        run: scripts/resolve-dependencies-versions.sh
+
+      - name: Build and publish Linux extension
+        run: scripts/publish-extension.sh
+        env:
+          CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
+          FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
+          VSCE_TARGET: linux-x64
+          CORE_LIB_PLATFORM_SUFFIX: linux.so
+          FFI_PACKAGES: "@yuuang/ffi-rs-linux-x64-gnu @yuuang/ffi-rs-linux-x64-musl"
+
+      - name: Build and publish Windows extension
+        run: scripts/publish-extension.sh
+        env:
+          CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
+          FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
+          VSCE_TARGET: win32-x64
+          CORE_LIB_PLATFORM_SUFFIX: windows.dll
+          FFI_PACKAGES: "@yuuang/ffi-rs-win32-x64-msvc"
+
+      - name: Build and publish MacOS extension
+        run: scripts/publish-extension.sh
+        env:
+          CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
+          FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
+          VSCE_TARGET: darwin-arm64
+          CORE_LIB_PLATFORM_SUFFIX: macos.dylib
+          FFI_PACKAGES: "@yuuang/ffi-rs-darwin-arm64"
+
+      - name: Debug echo
+        run: ls
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: godot-node-tree-vscode-*${{ github.ref_name }}.vsix
+          if-no-files-found: error
+        
+  create-github-release:
+    needs: build-and-publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: assets
+          merge-multiple: true
+      
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          files: assets/*
+          body: |
+            [Changelog](https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/CHANGELOG.md)
