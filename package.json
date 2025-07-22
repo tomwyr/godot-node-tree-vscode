@@ -1,7 +1,11 @@
 {
   "name": "godot-node-tree-vscode",
   "displayName": "Godot Node Tree",
-  "description": "",
+  "description": "Godot node tree information and utilities in VSCode.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomwyr/godot-node-tree-vscode.git"
+  },
   "version": "1.0.0",
   "engines": {
     "vscode": "^1.99.0"
