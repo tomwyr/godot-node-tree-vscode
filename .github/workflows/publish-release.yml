@@ -39,7 +39,8 @@ jobs:
           CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
           FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
           VSCE_TARGET: linux-x64
-          CORE_LIB_PLATFORM_SUFFIX: linux.so
+          TARGET_PLATFORM: linux
+          LIB_EXTENSION: .so
           FFI_PACKAGES: "@yuuang/ffi-rs-linux-x64-gnu @yuuang/ffi-rs-linux-x64-musl"
 
       - name: Build and publish Windows extension
@@ -48,7 +49,8 @@ jobs:
           CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
           FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
           VSCE_TARGET: win32-x64
-          CORE_LIB_PLATFORM_SUFFIX: windows.dll
+          TARGET_PLATFORM: windows
+          LIB_EXTENSION: .dll
           FFI_PACKAGES: "@yuuang/ffi-rs-win32-x64-msvc"
 
       - name: Build and publish MacOS extension
@@ -57,7 +59,8 @@ jobs:
           CORE_LIB_VERSION: ${{ steps.resolve-versions.outputs.core_lib_version }}
           FFI_VERSION: ${{ steps.resolve-versions.outputs.ffi_version }}
           VSCE_TARGET: darwin-arm64
-          CORE_LIB_PLATFORM_SUFFIX: macos.dylib
+          TARGET_PLATFORM: macos
+          LIB_EXTENSION: .dylib
           FFI_PACKAGES: "@yuuang/ffi-rs-darwin-arm64"
 
       - name: Debug echo
