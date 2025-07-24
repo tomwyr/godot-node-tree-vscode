@@ -88,6 +88,6 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "ffi-rs": "^1.2.10"
+    "ffi-rs": "1.2.10"
   }
 }
