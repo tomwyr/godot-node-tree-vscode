@@ -6,7 +6,7 @@ export function activate(context: ExtensionContext) {
   ffi.initialize(context);
 
   const nodeTreeView = new NodeTreeView();
-  nodeTreeView.refresh();
+  queueMicrotask(() => nodeTreeView.refresh());
 
   const treeViewDisposer = window.registerTreeDataProvider(
     "nodeTree",
