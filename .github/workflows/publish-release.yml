@@ -63,9 +63,6 @@ jobs:
           LIB_EXTENSION: .dylib
           FFI_PACKAGES: "@yuuang/ffi-rs-darwin-arm64"
 
-      - name: Debug echo
-        run: ls
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
