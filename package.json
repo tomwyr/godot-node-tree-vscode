@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/tomwyr/godot-node-tree-vscode.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.99.0"
   },
