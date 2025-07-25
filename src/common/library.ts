@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 
 export function getLibraryPath(context: vscode.ExtensionContext): string {
   const root = context.extensionPath;
-  const fileName = "godotNodeTreeCore" + getLibExtension();
+  const fileName = "libGodotNodeTreeCore" + getLibExtension();
   return path.join(root, "out", fileName);
 }
 

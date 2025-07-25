@@ -2,8 +2,8 @@
 
 set -e
 
-out_file_name="godotNodeTreeCore$LIB_EXTENSION"
-core_lib_file_name="godotNodeTreeCore-$CORE_LIB_VERSION-$TARGET_PLATFORM$LIB_EXTENSION"
+out_file_name="libGodotNodeTreeCore$LIB_EXTENSION"
+core_lib_file_name="libGodotNodeTreeCore-$CORE_LIB_VERSION-$TARGET_PLATFORM$LIB_EXTENSION"
 core_lib_url="https://github.com/$CORE_LIB_REPO/releases/latest/download/$core_lib_file_name"
 
 echo "Downloading $out_file_name ($core_lib_url)"
