@@ -1,4 +1,4 @@
-# Godot Node Tree
+# Godot Node Tree VSCode
 
 A VSCode extension providing utilities and information about the node tree for more efficient development of Godot projects in VSCode.
 
