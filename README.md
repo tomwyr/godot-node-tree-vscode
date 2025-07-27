@@ -1,5 +1,8 @@
 # Godot Node Tree VSCode
 
+> [!Important]
+> The current version of the project has been tested on macOS and **may not work properly** on Linux and Windows.
+
 A VSCode extension providing utilities and information about the node tree for more efficient development of Godot projects in VSCode.
 
 ## Features
